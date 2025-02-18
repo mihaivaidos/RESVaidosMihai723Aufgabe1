@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,9 +17,11 @@ public class Main {
         String filename = "src/ninja_events.xml";
         List<Ninja> ninjas = readXMLFile(filename);
 
-        ninjas.forEach(System.out::println);
+        //ninjas.forEach(System.out::println);
 
-        filterNinjasByPoints(ninjas);
+        //filterNinjasByPoints(ninjas);
+
+        filterStufeJonin(ninjas);
 
     }
 
@@ -66,6 +69,12 @@ public class Main {
         System.out.println("Enter a value: ");
         double points = Double.parseDouble(scanner.nextLine());
         ninjas.stream().filter(n -> n.getKraftpunkte() > points).map(Ninja::getCharacterName).distinct().forEach(System.out::println);
+    }
+
+    public static void filterStufeJonin(List<Ninja> ninjas) {
+        System.out.println("All ninjas with Stufe Jonin: ");
+        ninjas.stream().filter(n -> n.getStufe().equals("Jonin")).sorted(Comparator.comparing(Ninja::getDatum).reversed())
+                .map(n -> n.getDatum() + ": " + n.getCharacterName() + " - " + n.getBeschreibung()).forEach(System.out::println);
     }
 
 }
