@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,6 +17,8 @@ public class Main {
         List<Ninja> ninjas = readXMLFile(filename);
 
         ninjas.forEach(System.out::println);
+
+        filterNinjasByPoints(ninjas);
 
     }
 
@@ -56,6 +59,13 @@ public class Main {
             e.printStackTrace();
         }
         return ninjas;
+    }
+
+    public static void filterNinjasByPoints(List<Ninja> ninjas) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a value: ");
+        double points = Double.parseDouble(scanner.nextLine());
+        ninjas.stream().filter(n -> n.getKraftpunkte() > points).map(Ninja::getCharacterName).distinct().forEach(System.out::println);
     }
 
 }
